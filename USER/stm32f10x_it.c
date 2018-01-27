@@ -123,19 +123,20 @@ void DebugMon_Handler(void)
   * @param  None
   * @retval None
   */
-void PendSV_Handler(void)
-{
-}
+//void PendSV_Handler(void)
+//{
+//}
 
 /**
   * @brief  This function handles SysTick Handler.
   * @param  None
   * @retval None
   */
-extern __IO uint32_t LWipTime;
 void SysTick_Handler(void)
-{
-	LWipTime+=10;
+{				   
+	  OSIntEnter();		//进入中断
+    OSTimeTick();       //调用ucos的时钟服务程序               
+    OSIntExit();        //触发任务切换软中断
 }
 
 extern void LwIP_Pkt_Handle(void);

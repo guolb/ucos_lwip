@@ -1,5 +1,5 @@
-#include "stm32f10x.h"
-#include "stm32_eth.h"
+#include "includes.h"
+
 
 __IO uint32_t LWipTime = 0;     //LWip时钟周期计数器
 
