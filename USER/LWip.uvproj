@@ -837,6 +837,16 @@
             </File>
           </Files>
         </Group>
+        <Group>
+          <GroupName>MALLOC</GroupName>
+          <Files>
+            <File>
+              <FileName>mymalloc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MALLOC\mymalloc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
       </Groups>
     </Target>
   </Targets>
