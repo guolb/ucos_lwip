@@ -132,8 +132,10 @@ void PendSV_Handler(void)
   * @param  None
   * @retval None
   */
+extern __IO uint32_t LWipTime;
 void SysTick_Handler(void)
 {
+	LWipTime+=10;
 }
 
 /******************************************************************************/
