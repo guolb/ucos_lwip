@@ -345,7 +345,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_CL,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\STM32F10x_FWLib\inc;..\STM32F107_ETH\inc;..\lwip-1.4.1\src\include;..\lwip-1.4.1\src\include\ipv4;..\lwip-1.4.1\src\include\netif</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\STM32F10x_FWLib\inc;..\STM32F107_ETH\inc;..\lwip-1.4.1\src\include;..\lwip-1.4.1\src\include\ipv4;..\lwip-1.4.1\src\include\netif;..\lwip-1.4.1</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -729,6 +729,16 @@
               <FileName>ip_frag.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\lwip-1.4.1\src\core\ipv4\ip_frag.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>LWip-ARCH</GroupName>
+          <Files>
+            <File>
+              <FileName>sys_arch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\lwip-1.4.1\arch\sys_arch.c</FilePath>
             </File>
           </Files>
         </Group>
