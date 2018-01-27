@@ -50,6 +50,7 @@ void mymen_Init(void)
 			break;
 		}
 	}
+	
 	if(start_flag!=num)                      //判断for循环是如何结束的
 	{
 		return (void*)0;                       //如果找到连续内存块的数量！=num，也就是没有足够的连续内存块可供申请了，返回空指针

@@ -1,10 +1,47 @@
 #include "includes.h"
-
-
-__IO uint32_t LWipTime = 0;     //LWip时钟周期计数器
+#include "LED.h"
 
 #define PHY_ADDRESS       0x01  //DP83848地址，根据核心板硬件连接决定
 #define RMII_MODE               //配置网卡接口为RMII
+
+
+//START任务
+//任务优先级
+#define START_TASK_PRIO		10
+//任务堆栈大小
+#define START_STK_SIZE		128
+//任务堆栈
+OS_STK START_TASK_STK[START_STK_SIZE];
+//任务函数
+void start_task(void *pdata); 
+
+
+//LED1任务
+//设置任务优先级
+#define LED1_TASK_PRIO       			7 
+//设置任务堆栈大小
+#define LED1_STK_SIZE  		    		64
+//创建任务堆栈空间	
+OS_STK LED1_TASK_STK[LED1_STK_SIZE];
+//任务函数接口
+void led1_task(void *pdata);
+
+
+//LED2任务
+//设置任务优先级
+#define LED2_TASK_PRIO       			6 
+//设置任务堆栈大小
+#define LED2_STK_SIZE  					64
+//创建任务堆栈空间	
+OS_STK LED2_TASK_STK[LED2_STK_SIZE];
+//任务函数接口
+void led2_task(void *pdata);
+
+
+
+
+
+
 
 void NVIC_Configuration(void);      //向量表和以太网中断配置
 void GPIO_Configuration(void);      //配置用到的GPIO口
@@ -24,15 +61,56 @@ int main()
 	RCC_GetClocksFreq(&RCC_Clocks);                   //库函数，获取当前系统的时钟参数
 	SysTick_Config(RCC_Clocks.SYSCLK_Frequency / 100);//库函数，配置SysTick时钟，产生一个10ms的中断
 	NVIC_SetPriority (SysTick_IRQn, 1);               //库函数，设置SysTick的中断优先级
+	LED_Init();
 	
-	LWIP_Init();
-	
-	while (1)
-	{    
-		lwip_periodic_handle();
-	}
+	OSInit(); 					//UCOS初始化
+  LWIP_Init();
+	OSTaskCreate(start_task,(void*)0,(OS_STK*)&START_TASK_STK[START_STK_SIZE-1],START_TASK_PRIO);
+	OSStart(); //开启UCOS	
 
 }
+
+//start任务
+void start_task(void *pdata)
+{
+	OS_CPU_SR cpu_sr;
+	pdata = pdata ;
+	
+	OSStatInit();  			//初始化统计任务
+	OS_ENTER_CRITICAL();  	//关中断
+
+ 	OSTaskCreate(led1_task,(void *)0,(OS_STK*)&LED1_TASK_STK[LED1_STK_SIZE-1],LED1_TASK_PRIO);						   
+ 	OSTaskCreate(led2_task,(void *)0,(OS_STK*)&LED2_TASK_STK[LED2_STK_SIZE-1],LED2_TASK_PRIO);
+	
+	OSTaskSuspend(OS_PRIO_SELF); //挂起start_task任务
+	OS_EXIT_CRITICAL();  		//开中断
+}
+
+//LED1任务
+void led1_task(void *pdata)
+{	 	
+	while(1)
+	{
+		LED0_ON;
+		OSTimeDly(92);
+		LED0_OFF;
+		OSTimeDly(8);
+	};
+}
+
+//LED2任务
+void led2_task(void *pdata)
+{	  
+	while(1)
+	{
+		LED1_ON;
+		OSTimeDly(8);
+		LED1_OFF;
+		OSTimeDly(92);
+	};
+}
+
+
 
 
 void NVIC_Configuration(void)

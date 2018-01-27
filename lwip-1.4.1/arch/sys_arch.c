@@ -15,10 +15,10 @@ OS_STK  TCPIP_THREAD_TASK_STK[TCPIP_THREAD_STACKSIZE];//内核任务堆栈
 err_t sys_mbox_new( sys_mbox_t *mbox, int size)
 {
 	(*mbox)=mymalloc(sizeof(LWip_MBOX));	//为消息邮箱申请内存
-	memset((*mbox),0,sizeof(LWip_MBOX));    //清除mbox的内存
+	memset((*mbox),0,sizeof(LWip_MBOX));  //清除mbox的内存
 	if(*mbox)//内存分配成功
 	{
-		if(size>MBOX_MAX_SIZE)size=MBOX_MAX_SIZE;		         //消息队列最多容纳MAX_QUEUE_ENTRIES消息数目 
+		if(size>MBOX_MAX_SIZE)size=MBOX_MAX_SIZE;		             //消息队列最多容纳MAX_QUEUE_ENTRIES消息数目 
  		(*mbox)->pst=OSQCreate(&((*mbox)->pvQEntries[0]),size);  //使用UCOS创建一个消息队列
 		if((*mbox)->pst!=NULL)return ERR_OK;                     //返回ERR_OK,表示消息队列创建成功 ERR_OK=0
 		else
