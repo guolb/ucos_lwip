@@ -25,9 +25,11 @@ int main()
 	SysTick_Config(RCC_Clocks.SYSCLK_Frequency / 100);//库函数，配置SysTick时钟，产生一个10ms的中断
 	NVIC_SetPriority (SysTick_IRQn, 1);               //库函数，设置SysTick的中断优先级
 	
-    while(1)
-	{
-		
+	LWIP_Init();
+	
+	while (1)
+	{    
+		lwip_periodic_handle();
 	}
 
 }

@@ -20,7 +20,7 @@
 #define ETH_RXBUFNB        5  //接收缓冲器数量
 #define ETH_TXBUFNB        5  //发送缓冲器数量
 
-u8_t MACaddr[6]={0,0,0,0,0,1};               //MAC地址，具有唯一性
+extern u8_t MACaddr[6];                           //MAC地址，具有唯一性
 extern ETH_DMADESCTypeDef  *DMATxDescToSet;  //当前DMA发送描述符指针，在以太网库文件中定义的
 extern ETH_DMADESCTypeDef  *DMARxDescToGet;  //当前DMA接收描述符指针，在以太网库文件中定义的
 

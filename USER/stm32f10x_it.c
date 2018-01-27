@@ -23,7 +23,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x_it.h"
-
+#include "stm32_eth.h"
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
   */
@@ -138,6 +138,18 @@ void SysTick_Handler(void)
 	LWipTime+=10;
 }
 
+extern void LwIP_Pkt_Handle(void);
+void ETH_IRQHandler(void)
+{
+  //检测是否收到数据包
+  while(ETH_GetRxPktSize() != 0) 
+  {		
+    LwIP_Pkt_Handle();//接收数据函数
+  }
+
+  ETH_DMAClearITPendingBit(ETH_DMA_IT_R);     //清除DMA中断标志位
+  ETH_DMAClearITPendingBit(ETH_DMA_IT_NIS);   //清除DMA接收中断标志位
+}
 /******************************************************************************/
 /*                 STM32F10x Peripherals Interrupt Handlers                   */
 /*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
