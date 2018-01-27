@@ -345,7 +345,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_CL,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\USER;..\STM32F10x_FWLib\inc;..\STM32F107_ETH\inc;..\lwip-1.4.1\src\include;..\lwip-1.4.1\src\include\ipv4;..\lwip-1.4.1\src\include\netif;..\lwip-1.4.1;..\UCOS_II\CONFIG;..\UCOS_II\CORE;..\UCOS_II\PORT</IncludePath>
+              <IncludePath>..\CORE;..\USER;..\STM32F10x_FWLib\inc;..\STM32F107_ETH\inc;..\lwip-1.4.1\src\include;..\lwip-1.4.1\src\include\ipv4;..\lwip-1.4.1\src\include\netif;..\lwip-1.4.1;..\UCOS_II\CONFIG;..\UCOS_II\CORE;..\UCOS_II\PORT;..\MALLOC</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

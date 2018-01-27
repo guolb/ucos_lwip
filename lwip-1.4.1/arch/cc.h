@@ -1,10 +1,11 @@
 #ifndef __CC_H__
 #define __CC_H__
 
-
 #include <stdio.h> //使用printf函数，需包含stdio.h
+#include "includes.h"  //使用UCOS 要添加此头文件！
 
 #define BYTE_ORDER LITTLE_ENDIAN   //小端模式
+#define LWIP_PROVIDE_ERRNO 1       //使用lwip/arch.h头文件来定义这些编码
 
 //LwIP使用的数据类型定义――u8_t, s8_t, u16_t，s16_t，u32_t，s32_t，mem_ptr_t。
 typedef unsigned   char    u8_t;
@@ -55,6 +56,12 @@ typedef u32_t mem_ptr_t;
 
 #ifndef LWIP_PLATFORM_DIAG
 #define LWIP_PLATFORM_DIAG(x) do {printf x;} while(0)
+#endif
+
+#if OS_CRITICAL_METHOD == 3  
+#define SYS_ARCH_DECL_PROTECT(lev)	u32_t lev
+#define SYS_ARCH_PROTECT(lev)		    lev = OS_CPU_SR_Save() 	//UCOS II中进入临界区,关中断
+#define SYS_ARCH_UNPROTECT(lev)		  OS_CPU_SR_Restore(lev)	//UCOS II中退出A临界区，开中断 
 #endif
 
 #endif /* __CC_H__ */
